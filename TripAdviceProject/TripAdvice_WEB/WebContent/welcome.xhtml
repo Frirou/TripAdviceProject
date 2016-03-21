@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/template.xhtml">
+                
+                
+
+	<ui:define name="pageContent">
+
+
+	</ui:define>
+
+
+
+
+	<ui:define name="pageHome">
+	<h:outputScript name="js/jquery-1.7.min.js" />
+    
+     <h:outputScript name="js/jquery.jcarousel.js" />
+     <h:outputScript name="js/DD_belatedPNG-min.js" />
+     <h:outputScript name="js/functions.js" />
+	
+		<div id="slider">
+		<div class="shell">
+			<div id="slider-frame">
+			  	<div id="carousel">
+				   	<ul>
+				   		<li>
+				   			<img src="#{request.contextPath}/resources/css/images/slide.jpg" alt="Samll wooden house in the mountains surrounded by forest and meadows" />
+				   			<div class="caption">
+				   				<h2>Fiji Islands</h2>
+				   				<p>Fiji islands are getting to be one of many top tourist destinations in the Asian continent. It gets tourists by every perhaps the world on account of pleasant weather condition and wonderful landscapes.</p>
+				   			</div>
+				   		</li>
+				   		<li>
+				   			<img src="#{request.contextPath}/resources/css/images/slide2.jpg" alt="Samll wooden house in the mountains surrounded by forest and meadows" />
+				   			<div class="caption">
+				   				<h2>Las Vegas</h2>
+				   				<p>is the most populous city in the U.S. state of Nevada and the county seat of Clark County.Las Vegas is an internationally renowned major resort city known primarily for gambling, shopping, fine dining, and nightlife..</p>
+				   			</div>
+				   		</li>
+				   		<li>
+				   			<img src="#{request.contextPath}/resources/css/images/slide3.jpg" alt="Samll wooden house in the mountains surrounded by forest and meadows" />
+				   			<div class="caption">
+				   				<h2>Roman Colosseum</h2>
+				   				<p>The Colosseum is located just east of the Roman Forum and was built to a practical design, with its 80 arched entrances allowing easy access to 55,000 spectators, who were seated according to rank.</p>
+				   			</div>
+				   		</li>
+				   		<li>
+				   			<img src="#{request.contextPath}/resources/css/images/slide4.jpg" alt="Samll wooden house in the mountains surrounded by forest and meadows" />
+				   			<div class="caption">
+				   				<h2>Athens, Mykonos and Santorini </h2>
+				   				<p> The Athenian Callirhoe Exclusive Hotel is a unique superior boutique hotel in the heart of Athens where style and comfort.</p>
+				   			</div>
+				   		</li>
+				   			
+				   	</ul>
+				   	<div class="cl"></div>
+			   </div>
+			   <div class="slider-nav">
+			   		<ul>
+			   			<li class="first">
+			   				<a title="slide 1" href="#">1<img src="#{request.contextPath}/resources/css/images/thumb1.jpg" alt="Highway view during the night" /></a>
+			   				<h3>Fiji Islands</h3>
+                              pleasant weather condition and wonderful landscapes			   			</li>
+			   			<li>
+			   				<a title="slide 2" href="#">2<img src="#{request.contextPath}/resources/css/images/thumb2.jpg" alt="An alley leadign to a big houser, surrounded by flowers" /></a>
+			   				<h3>Las Vegas</h3>
+			   				Best touristic place in USA			   				
+			   			</li>
+			   			<li>
+			   				<a title="slide 3" href="#">3<img src="#{request.contextPath}/resources/css/images/thumb3.jpg" alt="A suitcase on the beach and a woman in the distance" /></a>
+			   				<h3>Roman Colosseum</h3>
+			   				historic Place			   				
+			   			</li>
+			   			
+			   			
+			   			<li>
+			   				<a title="slide 4" href="#">4<img src="#{request.contextPath}/resources/css/images/thumb4.jpg" alt="Big room with a large, classic sofa in it" /></a>
+			   				<h3>Athens</h3>
+			   				Wonderfull place			   				
+				   		</li>
+				   	 			
+			   		</ul>
+			   </div>
+   			</div>
+		</div>
+
+	</div>
+	<!-- END Slider -->
+
+	</ui:define>
+</ui:composition>

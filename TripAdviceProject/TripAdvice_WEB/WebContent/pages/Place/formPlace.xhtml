@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+			
+			<p:panel id="details" header="Place details" visible="#{placeBean.formDisplayed}">
+			<h:form rendered="#{placeBean.formDisplayed}" id="details_form">
+			
+			<h:panelGrid columns="2">
+			
+			<h:outputText value="Picture : " style="FONT-SIZE: small; COLOR: #000000;"/>
+    
+    <p:graphicImage id="place_image" value="#{placeImageBean.image}" cache="false" styleClass="editor-picture" width="283" height="163">
+    							<f:param name="placeId" value="#{placeBean.place.id_place}" />
+						</p:graphicImage>
+			
+				<h:outputText value="Name : " style="FONT-SIZE: small; COLOR: #000000;"/>
+			    <p:inputText value="#{placeBean.place.nom}" />
+			    
+			    
+			
+				<h:outputText value="Description :" style="FONT-SIZE: small; COLOR: #000000;"/>
+			    <p:inputText value="#{placeBean.place.deecription}" />
+  				<h:outputText value="Location : " style="FONT-SIZE: small; COLOR: #000000;"/>
+      			<p:inputText value="#{placeBean.place.lieu}" />
+      			<h:outputText value="Youtube Link : " style="FONT-SIZE: small; COLOR: #000000;"/>
+      			<p:inputText value="#{placeBean.place.video}" />
+      
+   
+     <p:growl id="messages" showDetail="true" life="2000" />  
+  
+    <p:gmap center="36.823833, 10.186767" zoom="7" type="ROADMAP" style="width:283px;height:300px">  
+  
+        <p:ajax event="pointSelect" listener="#{placeBean.onPointSelect}" update="messages" />  
+  
+    </p:gmap>  
+      				
+
+  <h:outputText value="Upload picture" />
+  
+  <p:fileUpload 	fileUploadListener="#{placeBean.handleFileUpload}" 
+								  			mode="advanced"
+ 											
+						 		  			sizeLimit="100000"
+						 		  			onsuccess="uploadFileDlgW.hide()"
+						 		  			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+    
+  	<h:outputText value="" />
+  
+	 
+			<h:panelGrid columns="3">
+			<p:commandButton actionListener="#{placeBean.doSaveOrUpdate()}" value="Save" style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold;" update=":master :details" 
+					oncomplete="plaTabW.filter();"/> 
+			
+			<p:commandButton actionListener="#{placeBean.doDelete()}" value="Delete" style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold;" update=":master :details" 
+					oncomplete="plaTabW.filter();"/> 
+			
+			
+					
+							<p:commandButton actionListener="#{placeBean.doCancel()}" value="Cancel" style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold;" update=":details"/>
+					
+					
+<!-- 					<p:commandButton icon="ui-icon-circle-plus" actionListener="#{placeBean.doAddWish()}" value="ADD To My WishListe" /> -->
+			</h:panelGrid>
+			</h:panelGrid>
+			</h:form>
+			</p:panel>
+			
+</ui:composition>

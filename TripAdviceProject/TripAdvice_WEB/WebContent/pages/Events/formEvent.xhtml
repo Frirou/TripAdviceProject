@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<script type="text/javascript">
+		
+	 function changeform()
+	 {
+	 	document.getElementById("master").style.display = "inline"	;
+	 	document.getElementById("myevent").style.display = "none"	;
+	 	
+	 }
+	 function changeform2()
+	 {
+	 	document.getElementById("myevent").style.display = "inline"	;
+	 	document.getElementById("master").style.display = "none"	;
+	 	
+	 	
+	 }
+	  </script>
+	<div id="tab1"
+		style="width: 900px; margin: 50px 0 0 160px; background-color: silver;">
+		<p:panel id="details" header="Event details"
+			visible="#{eventsBean.formDisplayed}">
+			<h:form rendered="#{eventsBean.formDisplayed}">
+
+				<h:panelGrid columns="2">
+
+					<h:outputText value="Nom "
+						style="FONT-SIZE: small; COLOR: #000000;" />
+					<p:inputText value="#{eventsBean.event.name}" />
+
+					<h:outputText value="Address "
+						style="FONT-SIZE: small; COLOR: #000000;" />
+					<p:inputText value="#{eventsBean.event.address}" />
+
+
+					<h:outputText value="Begin Date "
+						style="FONT-SIZE: small; COLOR: #000000;" />
+					<p:calendar value="#{eventsBean.event.begin_date}"
+						mindate="#{eventsBean.date2}" id="popupCal"
+						pattern="MM/dd/yyyy HH:mm" minHour="9" maxHour="18" />
+
+					<h:outputText value="End Date "
+						style="FONT-SIZE: small; COLOR: #000000;" />
+					<p:calendar value="#{eventsBean.event.end_date}"
+						mindate="#{eventsBean.date}" id="popupCal1"
+						pattern="MM/dd/yyyy HH:mm" minHour="9" maxHour="18" />
+
+					<h:outputText value="Type Event"
+						style="FONT-SIZE: small; COLOR: #000000;" />
+
+
+					<h:selectOneRadio value="#{eventsBean.radio}"
+						layout="pageDirection" style="FONT-SIZE: small; COLOR: #000000;">
+						<f:selectItem itemValue="payant" itemLabel="Privat" />
+						<f:selectItem itemValue="gratuit" itemLabel="Public" />
+
+						<f:ajax render="inputs" />
+					</h:selectOneRadio>
+
+					<h:outputText value="" />
+					<h:outputText value="" />
+					<h:outputText id="nbr1" value="Nbr Ticket "
+						style="FONT-SIZE: small; COLOR: #000000;" />
+
+					<h:inputText id="inputs" value="#{eventsBean.event.nbrTicket}"
+						disabled="#{eventsBean.radio == 'gratuit'}" />
+
+					<h:outputText value="Upload picture"
+						style="FONT-SIZE: small; COLOR: #000000;" />
+
+					<p:fileUpload fileUploadListener="#{eventsBean.handleFileUpload}"
+						mode="advanced" sizeLimit="100000"
+						onsuccess="uploadFileDlgW.hide()"
+						allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+
+					<h:outputText value="Is Blocked"
+						style="FONT-SIZE: small; COLOR: #000000;" />
+
+					<p:selectBooleanCheckbox value="#{eventsBean.block}" />
+					<p:commandButton actionListener="#{eventsBean.doCancel()}"
+						value="Cancel"
+						style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold;"
+						update=":details" />
+					<h:panelGrid columns="2">
+
+						<p:commandButton actionListener="#{eventsBean.doDelete()}"
+							value="Delete"
+							style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold;"
+							update=":details" oncomplete="plaTab.filter();" />
+
+						<p:commandButton actionListener="#{eventsBean.doSaveOrUpdate()}"
+							value="Save"
+							style="FONT-SIZE: small; 
+			COLOR: #0000a0; BACKGROUND-COLOR: #ffffff; FONT-WEIGHT: bold; "
+							update=":details" oncomplete="plaTab.filter();" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+	</div>
+
+
+</ui:composition>

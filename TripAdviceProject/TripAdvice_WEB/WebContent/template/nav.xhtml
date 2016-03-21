@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+	
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form rendered="#{authBean.loggedIn}">
+	
+		
+	
+		<ul>
+		    			<li><p style="color: black;">Hello <b style="color:red;">#{authBean.user.login}</b></p></li>
+		    			
+		     <li><a href="#{request.contextPath}/welcome.jsf">Home</a></li>
+		     <li><a href="#{request.contextPath}/pages/profile.jsf">Profile</a></li>
+		     <li><a href="#{request.contextPath}/pages/Place/managePlace.jsf">My Places</a></li>
+			<li><a href="#{request.contextPath}/pages/Place/places.jsf">Travel Places</a></li>
+		    <li><a href="#{request.contextPath}/pages/Events/manageEvent.jsf">Events</a></li>
+		    <li><a href="#{request.contextPath}/pages/wishlist/wishh.jsf">WishList</a></li>
+		    <li><a href="#{request.contextPath}/pages/msg/msg.jsf">Messages</a></li>
+			<li><h:commandLink action="#{authBean.doLogout}" value="Logout"/></li>
+								
+						
+			
+			
+		</ul>
+		
+	</h:form>
+	
+	<h:form rendered="#{!authBean.loggedIn}">
+			<ul>
+	
+			<li><h:commandLink action="#{authBean.doLogout}" value="login" /></li>
+								</ul>
+						
+						</h:form>	
+
+
+</ui:composition>

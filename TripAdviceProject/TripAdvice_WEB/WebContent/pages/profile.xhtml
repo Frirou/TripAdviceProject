@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+
+
+<ui:define name="pageContent">
+
+		<div id="main">
+		<div class="shell">
+			<!-- Content -->
+			<div id="content">
+			
+            		
+            <h:form id="form">
+            <div class="post">
+                                              						<h3>Picture</h3>
+                                            <p:graphicImage id="personne_image" value="#{personneImageBean.image}" cache="false" styleClass="editor-picture" height="280"
+										width="200">
+    							<f:param name="personneId" value="#{authBean.user.id}" />
+						</p:graphicImage> 
+<p:outputLabel value="Change Piture" style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+						
+					<p:fileUpload 	fileUploadListener="#{userBean.handleFileUpload}" 
+								  			mode="advanced"
+ 											id="related_image"				 		  			
+ 											sizeLimit="100000"
+						 		  			
+						 		  			allowTypes="/(\.|\/)(gif|jpe?g|png)$/" /> 
+						 		  						<p:commandButton action="#{userBean.doSaveOrUpdate()}" value="Update"   update="container" oncomplete="window.location.href = '/TripAdvice_WEB/pages/profile.jsf'" />	 		  									
+                </div>
+                
+                
+                   
+                
+				<div class="post last">
+                   <h3>Profile Informations</h3>
+      
+                  
+                <p:fieldset id="container" legend="Personnel Information" toggleable="False" style="width:300px;height:400px;overflow:auto;">
+                    
+                    
+                    <h:panelGroup  >
+                
+                      <h:outputLabel value="Name : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.nom}" /><br />
+                       <h:outputLabel value="Last Name : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.prenom}" /><br />
+                      <h:outputLabel value="Login : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.login}" /><br />
+                      <h:outputLabel value="Password : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.password}" /><br />
+                      <h:outputLabel value="Mail : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.mail}" /><br />
+                      <h:outputLabel value="Phone : " style="FONT-SIZE:big; COLOR:blue;font-weight:bold;"/>
+                      <h:outputText value="#{authBean.user.phone}" /><br />
+                      
+                    </h:panelGroup>
+                    
+                      <p:commandButton value="Update Information" actionListener="#{chatView.login}" update="container" 
+                                         icon="ui-icon-person" onclick="dlg.show()" />
+                </p:fieldset>
+                
+                                                                                                   </div>
+                
+                
+                                              						
+                
+                
+                	<p:dialog header="Profile Details" 
+				  widgetVar="dlg"
+			      resizable="false" 
+			      showEffect="fade"
+			      hideEffect="fade">
+
+			<h:panelGrid id="display" 
+			             columns="2" 
+			             cellpadding="4" >
+
+		
+						
+ 
+				
+                
+                        <h:outputText value="Name : " style="font-weight:bold"/> 
+                <p:inplace id="nomTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.nom}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace> 
+                 <h:outputText value="Last Name : " style="font-weight:bold"/> 
+                <p:inplace id="addressTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.prenom}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace> 
+                <h:outputText value="Login : " style="font-weight:bold"/> 
+                <p:inplace id="bgdateTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.login}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace> 
+                <h:outputText value="Password : " style="font-weight:bold"/> 
+                <p:inplace id="pwdTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.password}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace> 
+                 <h:outputText value="Mail : " style="font-weight:bold"/> 
+                <p:inplace id="mailTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.mail}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace> 
+                  <h:outputText value="Phone : " style="font-weight:bold"/> 
+                <p:inplace id="phoneTrader" editor="true"> 
+                <p:inputText value="#{authBean.user.phone}" required="true" requiredMessage="*" label="text" /> 
+                </p:inplace>
+                
+                 
+               </h:panelGrid>
+               
+		
+			<p:commandButton action="#{userBean.doSaveOrUpdate()}" value="Update"   update="container" />
+			<p:commandButton action="#" value="Cancel" onclick="dlg.hide()"  />
+		
+               </p:dialog>
+               
+                             
+            </h:form>
+            
+            </div></div></div>
+        </ui:define>
+        </ui:composition>

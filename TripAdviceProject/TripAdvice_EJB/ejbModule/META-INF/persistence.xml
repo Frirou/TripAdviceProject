@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="TripAdvice_EJB">
+	<jta-data-source>java:/travel</jta-data-source>
+	<class>com.esprit.persistence.Admin</class>
+	<class>com.esprit.persistence.Checkin</class>
+	<class>com.esprit.persistence.Circle</class>
+	<class>com.esprit.persistence.Comment</class>
+	<class>com.esprit.persistence.Event</class>
+	<class>com.esprit.persistence.Message</class>
+	<class>com.esprit.persistence.Page</class>
+	<class>com.esprit.persistence.Personne</class>
+	<class>com.esprit.persistence.Place</class>
+	<class>com.esprit.persistence.Place_page</class>
+	<class>com.esprit.persistence.Ticket</class>
+	<class>com.esprit.persistence.User</class>
+	<class>com.esprit.persistence.Wishlist</class>
+	
+		<properties>
+			<property name="hibernate.hbm2ddl.auto" value="update"/>
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.format_sql" value="true"/>
+
+		</properties>
+	
+	</persistence-unit>
+</persistence>

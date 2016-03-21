@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui">
+    
+			<h:form id="master">
+	<p:commandButton icon="ui-icon-circle-plus" actionListener="#{placeBean.doNew}" value="Add new Place" update=":details"/>
+			
+			<p:dataTable rendered="#{not empty placeBean.findPlacesByUser(authBean.user.id)}"
+			           value="#{placeBean.findPlacesByUser(authBean.user.id)}" 
+			           var="pla" 
+			           rows="5"
+			           rowKey="#{pla.id_place}"
+			           paginator="true"
+			           paginatorPosition="bottom"
+			           filteredValue="#{placeBean.fileteredPlaces}"
+			           selectionMode="single"
+			           selection="#{placeBean.place}"
+			           widgetVar="plaTabW">
+			           
+			     <f:facet name="header">
+			        <h:outputText value="Manage Places" />
+			     </f:facet>
+			     
+			      <p:ajax event="rowSelect" listener="#{placeBean.onRowSelect}" update=":details"/>
+			      
+			 		 	
+			 
+			  
+			  <p:column headerText="Name" filterBy="#{pla.nom}" filterMatchMode="contains">
+			     
+			   <h:outputText value="#{pla.nom}" />
+			  </p:column>
+			  
+			  
+			  
+			   <p:column headerText="Lieu" filterBy="#{pla.lieu}" filterMatchMode="contains">
+			    
+			   <h:outputText value="#{pla.lieu}" />
+			  </p:column>
+			  
+			</p:dataTable>
+			
+			</h:form>
+			
+</ui:composition>

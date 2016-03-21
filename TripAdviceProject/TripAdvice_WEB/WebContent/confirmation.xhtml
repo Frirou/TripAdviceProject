@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Travel Advice Authentication</title>
+	    <h:outputStylesheet  name="dist/css/bootstrap.css" />
+	    <h:outputStylesheet  name="assets/css/custom.css" />
+	    <h:outputStylesheet  name="plugins/animo/animate%2banimo.css" />
+	    <h:outputStylesheet  name="assets/css/font-awesome.css" />
+	    <h:outputScript name="js/jquery.v2.0.3.js" />    	
+</h:head>
+
+  <h:body>
+	<!-- 100% Width & Height container  -->
+	<div class="login-fullwidith">   
+  <f:metadata>
+	    <f:viewParam name="id" value="#{validationBean.id}" />
+	    <f:event type="preRenderView" listener="#{validationBean.validateAccount()}" />
+	</f:metadata>
+		
+
+  
+      <div class="row-fluid" >
+          <div class="span6" style="margin-top:-30px;width:100%">
+                     <!-- BEGIN User Info-->	
+                     <div class="widget" style="border-radius: 4px;">
+                        <div class="widget-title">
+                           <h4><i class="icon-reorder"></i>Confirmation</h4>		
+                        </div>
+	                    <br/><br/><br/>
+	                  <h:form> 
+	                   <div class="jumbotron">
+	                    <div class="container">
+						  <h1>confirmation</h1>
+						  <p>Félicitations, vous venez de confirmer votre compte.</p>
+						  <p><h:commandLink action="login.jsf"   class="btn btn-primary btn-lg" >-> Se connecter</h:commandLink></p>
+						</div>
+	                   </div>
+	                  </h:form> 
+	                   
+	                 </div>
+                     <!-- END User Info-->
+         </div>         
+     </div>	
+ 
+   </div>	
+	<!-- End of Container  -->
+
+	<!-- Javascript  -->
+    <h:outputScript name="js/initialize-loginpage.js" />    	
+	<h:outputScript name="js/jquery.easing.js" />    
+	<h:outputScript name="js/animo.js" />    
+		
+	<script>
+	function errorMessage(){
+		$('.login-wrap').animo( { animation: 'tada' } );
+	}
+	</script>
+  </h:body>
+</html>
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+              

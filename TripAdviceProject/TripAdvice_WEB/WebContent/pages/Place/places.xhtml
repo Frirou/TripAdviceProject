@@ -1,0 +1,241 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/template/template.xhtml">
+                	
+			<ui:define name="pageContent">
+
+
+<h:form id="form">
+			    <p:growl id="messages" showDetail="true"/>
+                
+
+	<p:dataGrid var="pl" value="#{tableBean.places}" columns="3"
+		rows="12" 
+		paginator="true"
+			           paginatorPosition="bottom">
+
+        <p:panel header="#{pl.nom}" style="text-align:center">
+            <h:panelGrid columns="1" style="width:100%">
+<p:graphicImage id="place_image" value="#{placeImageBean.image}" cache="false" styleClass="editor-picture" height="170"
+										width="290">
+    							<f:param name="placeId" value="#{pl.id_place}" />
+						</p:graphicImage>
+                <h:outputText value="#{pl.deecription}" />
+
+                 <p:commandLink update=":form:placeDetail" oncomplete="PF('placeDialog').show()" title="View Detail">
+                 
+                    <h:outputText styleClass="ui-icon ui-icon-image" style="margin:0 auto;" /> 
+                    <f:setPropertyActionListener value="#{pl}" 
+                            target="#{tableBean.selectedPlace}" />
+</p:commandLink>                
+                
+                
+                <p:commandLink update=":form:mapDialog" oncomplete="PF('mapDialog').show()" title="View Detail">
+                 
+                    <h:outputText value="Show map" /> 
+                    <f:setPropertyActionListener value="#{pl}" 
+                            target="#{tableBean.selectedPlace}" />
+                </p:commandLink>
+                
+                
+                
+                <p:commandLink update=":form:videoDialog" oncomplete="PF('videoDialog').show()" title="View Detail">
+                 
+                    <h:outputText value="Show video"  /> 
+                    <f:setPropertyActionListener value="#{pl}" 
+                            target="#{tableBean.selectedPlace}" />
+                </p:commandLink>
+                
+                
+                              
+            </h:panelGrid>
+        </p:panel>
+
+	</p:dataGrid>
+
+
+	
+	
+	<p:dialog header="mapDialog" widgetVar="mapDialog" modal="true" >
+		<p:outputPanel id="mapDialog" style="text-align:center;">
+		
+		<p:gmap center="#{tableBean.selectedPlace.latitude}, #{tableBean.selectedPlace.longitude}" zoom="10" type="HYBRID" 
+		style="width:600px;height:400px" model="#{mapBean.simpleModel}" >
+		
+		 <p:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}"  />  
+  
+        <p:gmapInfoWindow>  
+            <p:outputPanel  style="text-align:center;display:block;margin:auto:"> 
+                    
+       <p:graphicImage   value="#{placeImageBean.image}" style="height:150px;width:150px"> 
+         
+                  <f:param  name="placeId" value="#{tableBean.selectedPlace.id_place}" />
+              
+               </p:graphicImage>
+                <br />
+                    <h:outputText value="#{mapBean.marker.title}" />  
+  
+            </p:outputPanel>  
+        </p:gmapInfoWindow>  	
+		</p:gmap>
+		</p:outputPanel>
+		</p:dialog>
+		
+		
+		
+		
+		
+		
+		
+	
+		<p:dialog header="videoDialog" widgetVar="videoDialog" modal="true" >
+		<p:outputPanel id="videoDialog" style="text-align:center;">
+		
+	<p:media value="#{tableBean.selectedPlace.video}" width="700" height="250" player="flash"/>
+		
+		
+		</p:outputPanel>
+		</p:dialog>
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	<p:dialog header="Place Detail" widgetVar="placeDialog" modal="true" dynamic="true" >
+		<p:outputPanel id="placeDetail" style="text-align:center;">
+		
+		<h:panelGrid  columns="2" cellpadding="0" >
+		
+			
+			
+			
+			<h:outputLabel for="Place Name" value="Place Name :" />
+				<h:outputText id="PlaceName" value="#{tableBean.selectedPlace.nom}"/>
+				
+				<h:outputLabel for="PlaceDesc" value="Description : " />
+				<h:outputText id="Description" value="#{tableBean.selectedPlace.deecription}" />
+				
+				<h:outputLabel for="location" value="Location : " />
+				<h:outputText id="location" value="#{tableBean.selectedPlace.lieu}" />
+				<h:outputLabel for="rate" value="Rate number : " />
+			
+				
+				<p:rating value="#{tableBean.selectedPlace.moyRate}" readonly="true" /> 
+				
+				<h:outputLabel for="CheckIn" value="Number of check-IN : " />
+				<h:outputText id="checkin" value="#{tableBean.selectedPlace.nbCheckIn}" />
+				<h:outputLabel for="Creator" value="Creator : " />
+				<h:outputText id="Creator" value="#{tableBean.selectedPlace.personne.login}" />
+			    <h:outputText  value="Picture" />
+				
+				<p:graphicImage id="place_image" value="#{placeImageBean.image}" cache="false" styleClass="editor-picture"  height="170"
+										width="290">
+    							<f:param name="placeId" value="#{tableBean.selectedPlace.id_place}" />
+						</p:graphicImage>
+						<!-- 					Show video	 -->
+						
+<!-- 				<p:media value="http://www.youtube.com/v/KZnUr8lcqjo" width="400" height="169" player="flash"/> -->
+						
+				
+				
+				
+				     <p:commandButton value="ADD To My WishListe"   actionListener="#{tableBean.doAddWish()}" />
+				
+<!-- 				Rate Place -->
+<h:outputLabel value="" />
+				<h:outputLabel for="RatePlace" value="Rate this Place " />
+
+        <p:rating value="#{tableBean.place.rate}">
+            <p:ajax event="rate" listener="#{tableBean.onrate}" update="messages" />
+        </p:rating>
+        
+        <h:outputLabel for="Comment" value="Comment" />
+        
+        <p:inputTextarea rows="1" cols="20" value="#{tableBean.comment.text}" id="cm" />
+        				<h:outputLabel for="Commit" value=""/>
+        
+        <p:commandButton value="Save Comment"  update="form1 cm" action="#{tableBean.doNewComment()}" oncomplete="handleLoginRequest(xhr, status, args)" />
+   
+    <h:outputLabel value="" /> 
+    
+       
+  
+        
+        
+                
+			</h:panelGrid>
+			  <h:form id="form1">
+    <p:fieldset legend="Comments" toggleable="true" toggleSpeed="500" id="details" scrollable="true" rendered="#{ not empty tableBean.findComm(tableBean.selectedPlace.id_place)}" >
+        <p:dataTable  id="Comments" var="com" value="#{tableBean.findComm(tableBean.selectedPlace.id_place)}"  style="width:400px;height:100px;overflow:auto;" >
+         
+            <p:column headerText="UserName">
+            <p:graphicImage id="personne_image" value="#{personneImageBean.image}" cache="false" styleClass="editor-picture" height="45"
+										width="64">
+    							<f:param name="personneId" value="#{com.personne.id}" />
+						</p:graphicImage>
+            
+            <br />
+                <h:outputText value="#{com.personne.login}" />
+            </p:column>
+
+            <p:column headerText="Comment">
+                <h:outputText value="#{com.text}" />
+            </p:column>
+
+        </p:dataTable>
+    </p:fieldset>
+        </h:form>
+		</p:outputPanel>
+		
+	</p:dialog>
+	
+	
+
+</h:form>
+<div id="fb-root"></div>
+<script type="text/javascript">
+	function handleLoginRequest(xhr, status, args) {
+           //PF('placeDialog').jq.effect("shake", { times:5 }, 100);
+           location.reload();
+           
+            PF('placeDialog').show();
+//   $('#comments').fadeOut();
+
+    }
+</script>
+
+
+
+
+
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;appId=516741378384565&amp;version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+</ui:define>
+</ui:composition>
+		

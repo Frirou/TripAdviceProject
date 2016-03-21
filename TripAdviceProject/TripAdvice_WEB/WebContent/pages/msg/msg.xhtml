@@ -1,0 +1,188 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="pageContent">
+		<div id="main">
+		<div class="shell">
+			<!-- Content -->
+			<div id="content">
+			
+<h:outputScript>
+//<![CDATA[
+  function handleMessage(data) {
+                if (data.indexOf("updateUserList()") !== -1) {
+                    updateUserList();
+                }
+                else {
+                    var chatContent = $(PrimeFaces.escapeClientId('form:public'));
+                    chatContent.append(data + '<br />');
+
+                    //keep scroll
+                    chatContent.scrollTop(chatContent.height());
+                }
+            }
+            //]]>
+
+</h:outputScript>
+  <p:growl id="growl" showDetail="true" />
+            
+            <h:form id="form">
+                
+                <p:fieldset id="container" legend="Travel Chat" toggleable="true">
+                    
+                    <h:panelGroup rendered="#{chatView.loggedIn}">
+                    
+                   
+                        
+                        <h:panelGrid columns="2" columnClasses="publicColumn,usersColumn" style="width:100%">
+                            <p:outputPanel id="public" layout="block" styleClass="ui-corner-all ui-widget-content chatlogs"/>
+                            
+                            <p:dataList id="users" var="user" value="#{chatUsers.users}" styleClass="usersList">
+                                <f:facet name="header">
+                                    Users
+                                </f:facet>
+
+                                <p:commandButton title="Chat" icon="ui-icon-comment" oncomplete="pChat.show()" update=":form:privateChatContainer">
+                                    <f:setPropertyActionListener value="#{user}" target="#{chatView.privateUser}" />
+                                </p:commandButton>
+                                #{user}
+                            </p:dataList>
+                        </h:panelGrid>
+                        
+                        <p:separator />
+                        
+                        <p:inputText value="#{chatView.globalMessage}" styleClass="messageInput" />
+                        <p:spacer width="5" />
+                        <p:commandButton value="Send" actionListener="#{chatView.sendGlobal}" oncomplete="$('.messageInput').val('').focus()"/>
+                        <p:spacer width="5" />
+                        <p:commandButton value="Disconnect" actionListener="#{chatView.disconnect}" global="false" update="container" />
+                    </h:panelGroup>
+                    
+                    <h:panelGroup  >
+                
+                        <p:commandButton value="Start Chat" actionListener="#{chatView.login}" update="container" 
+                                         icon="ui-icon-person" />
+                    </h:panelGroup>
+                    
+                </p:fieldset>
+                
+                <p:dialog widgetVar="pChat" header="Private Chat" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:panelGrid id="privateChatContainer" columns="2" columnClasses="vtop,vtop">
+                        <p:outputLabel for="pChatInput" value="To: #{chatView.privateUser}" />
+                        <p:inputTextarea id="pChatInput" value="#{chatView.privateMessage}" rows="5" cols="30" />
+                        
+                        <p:spacer />
+                        <p:commandButton value="Send" actionListener="#{chatView.sendPrivate}" oncomplete="pChat.hide()" />
+                    </h:panelGrid>
+                </p:dialog>
+                             
+            </h:form>
+            
+            <p:socket onMessage="handleMessage" channel="/chat" autoConnect="false" widgetVar="subscriber">
+                <p:ajax event="message" update=":form:users" />
+            </p:socket>	
+			
+			
+			
+		<h:form id="form1" rendered="#{authBean.loggedIn}">
+						<div class="post">
+		
+					
+				<h3>Friends</h3>
+
+
+
+				<p:growl id="msgs" showDetail="true" />
+
+
+				<p:dataTable id="users" var="user" value="#{msgBean.friendnotme()}"
+					paginator="true" rows="5" selection="#{msgBean.client}" >
+					
+			    
+
+					<p:ajax event="rowSelect" update=":form1:display" />
+						<div class="media">
+						<p:column headerText="Search Friend" filterBy="#{user.login}" filterMatchMode="contains">	
+ <p:graphicImage id="personne_image" value="#{personneImageBean.image}" cache="false" styleClass="editor-picture" height="64"
+										width="64">
+    							<f:param name="personneId" value="#{user.id}" />
+						</p:graphicImage>
+											</p:column>
+						
+						</div>
+					<p:column>
+						<p:commandButton id="selectButton" update=":form1:display"
+							value="Show conversation">
+							<f:setPropertyActionListener value="#{user}"
+								target="#{msgBean.selecteClient}" />
+						</p:commandButton>
+						<div class="media-body">
+							<h:outputText value="#{user.nom}"
+								styleClass="media-heading" />
+						</div>
+					</p:column>
+				</p:dataTable>
+			
+			</div>
+							<div class="post">
+			
+			<h3>Messages</h3>
+				<p:panel header="messages" widgetVar="userDialog" resizable="false"
+					id="display" showEffect="fade" hideEffect="explode" modal="true" style="width:400px;height:400px;overflow:auto;" >
+
+<h:outputText value="Message" />
+ <p:inputText value="#{msgBean.txt}" >
+ </p:inputText>
+ <p:commandButton action="#{msgBean.doNew()}" value="submit" oncomplete="window.location.href = '/TripAdvice_WEB/pages/msg/msg.jsf'"/>
+					
+					
+					<ui:repeat var="mes" value="#{msgBean.aficheMessage(msgBean.selecteClient.id)}" >
+					
+					
+					
+					
+					
+        <div class="media">
+        	<div class="media">
+ <p:graphicImage id="personne_image" value="#{personneImageBean.image}" cache="false" styleClass="editor-picture" height="64"
+										width="64">
+    							<f:param name="personneId" value="#{mes.pSend.id}" />
+						</p:graphicImage>
+						</div>
+							
+							<div class="media-body">
+								<h4 class="media-heading">
+									<h:outputLabel value="#{mes.pSend.login}"  />
+								</h4>
+
+								<b><h:outputLabel value="#{mes.text}" /></b>
+								<h:outputLabel value="#{mes.date}" />
+							</div>
+						</div>
+						<br />
+												<br />
+												
+						
+ </ui:repeat>
+ 
+ <br />
+ 
+ 
+ 
+ 
+ 
+				</p:panel>
+
+			</div>
+
+		</h:form>
+</div></div></div>
+
+
+
+	</ui:define>
+	
+</ui:composition>

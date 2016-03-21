@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<title>Travel Advice Authentication</title>
+	    <h:outputStylesheet  name="dist/css/bootstrap.css" />
+	    <h:outputStylesheet  name="assets/css/custom.css" />
+	    <h:outputStylesheet  name="plugins/animo/animate%2banimo.css" />
+	    <h:outputStylesheet  name="assets/css/font-awesome.css" />
+	    <h:outputScript name="js/jquery.v2.0.3.js" />    	
+</h:head>
+
+  <h:body>
+	<!-- 100% Width & Height container  -->
+	<div class="login-fullwidith">
+		
+			<ui:insert name="pageContent" />
+		
+	
+	
+	</div>	
+	<!-- End of Container  -->
+
+	<!-- Javascript  -->
+    <h:outputScript name="js/initialize-loginpage.js" />    	
+	<h:outputScript name="js/jquery.easing.js" />    
+	<h:outputScript name="js/animo.js" />    
+		
+	<script>
+	function errorMessage(){
+		$('.login-wrap').animo( { animation: 'tada' } );
+	}
+	</script>
+  </h:body>
+</html>

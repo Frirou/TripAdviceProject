@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
+	
+    <h:outputStylesheet library="css" name="style2.css" />
+
+</h:head>
+
+<h:body>
+
+    <!--BEGIN #signup-form -->
+    <div id="signup-form">
+        
+        <!--BEGIN #subscribe-inner -->
+        <div id="signup-inner">
+        
+        	<div class="clearfix" id="header">
+        	
+        		<img id="signup-icon" src="#{request.contextPath}/resources/css/images/logo.png" alt="" />
+        
+                <h1>Sign up  </h1>
+
+            
+            </div>
+
+            
+            <h:form id="send" action="">
+<label for="name">First Name *</label>
+						<h:inputText  id="firstname" value="#{authBean.user.prenom}" validatorMessage="between 3 and 12" required="true" requiredMessage="first name is required">
+							<f:validateLength minimum="3" maximum="12" />
+							<f:ajax event="blur" execute="@this" render="msg_firstname" />
+						</h:inputText>
+						<h:message id="msg_firstname" for="firstname" styleClass="error"/>
+						
+					  <label for="name">Last Name *</label>
+					     
+						<h:inputText id="lastname" value="#{authBean.user.nom}" validatorMessage="between 3 and 12" required="true" requiredMessage="first name is required">
+							<f:validateLength minimum="3" maximum="12" />
+							<f:ajax event="blur" execute="@this" render="msg_lastname" />
+						</h:inputText>
+						<h:message id="msg_lastname" for="lastname" styleClass="error"/>
+					     
+					      <label for="name">Address *</label>
+					     
+						<h:inputText id="adress" value="#{authBean.user.adress}" validatorMessage="between 3 and 20" required="true" requiredMessage="adress name is required">
+							<f:validateLength minimum="3" maximum="12" />
+							<f:ajax event="blur" execute="@this" render="msg_adress" />
+						</h:inputText>
+						<h:message id="msg_adress" for="adress" styleClass="error"/>
+					     
+										  <label for="name">Login *</label>
+					
+						<h:inputText id="login" value="#{authBean.user.login}"  required="true" requiredMessage="login is required">
+							<f:ajax event="blur" execute="@this" render="msg_login" />
+						</h:inputText>
+						<h:message id="msg_login" for="login" styleClass="error"/>
+
+					  <label for="name">Password *</label>
+
+						<h:inputSecret id="password" value="#{authBean.user.password}" validatorMessage="between 6 and 12" required="true" requiredMessage="password is required">
+							<f:validateLength minimum="6" maximum="12" />
+							<f:ajax event="blur" execute="@this" render="msg_password" />
+						</h:inputSecret>
+						<h:message id="msg_password" for="password" styleClass="error"/>
+
+					  <label for="name">email *</label>
+
+						<h:inputText id="email" value="#{authBean.user.mail}" validatorMessage="invalid email!">
+							<f:ajax event="blur" execute="@this" render="msg_email" />
+							<f:validateRegex pattern="^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"/>
+						</h:inputText>
+						
+						<h:message id="msg_email" for="email" styleClass="error"/>
+ 						
+ 						
+ 						<p>
+						<h:commandButton action="#{authBean.doRegister}" value="sign up" styleClass="btn-search4"/>
+						  </p> 
+                
+</h:form>            
+		<div id="required">
+		<p>* Required Fields<br/>
+		NOTE: You must activate your account after sign up</p>
+		</div>
+
+
+            </div>
+        
+        <!--END #signup-inner -->
+        </div>
+        
+   
+
+</h:body>
+</html>

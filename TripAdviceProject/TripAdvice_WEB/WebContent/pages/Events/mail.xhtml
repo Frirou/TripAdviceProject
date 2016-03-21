@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	 template="/template/template.xhtml">
+	
+<ui:define name="pageContent">
+
+
+                <p:commandButton value="Compose" onclick="composeDlg.show()" type="button" icon="ui-icon ui-icon-document"/>     
+                <p:dialog widgetVar="composeDlg" modal="true" header="New Email" width="530" showEffect="fade" hideEffect="fade">
+
+                <h:form id="f1">
+                    <h:panelGrid columns="2" cellspacing="5">
+                         <h:outputLabel for="to" value="To: " />
+                         <p:inputText id="to" value="#{mailingBean.to}"/>
+                        <h:outputLabel for="cc" value="CC: " />
+                        <p:inputText id="cc" value="#{mailingBean.subject}"/>
+                        <h:outputLabel for="subject" value="subject: " />
+                        <p:inputText id="subject" size="50"/>
+                    </h:panelGrid>
+                    <p:separator />
+           <p:editor id="corp" widgetVar="editor" value="#{mailingBean.corp}" />
+
+                    <p:separator />
+                      <p:commandButton value="Send" onclick="composeDlg.hide()" action="#{mailingBean.send()}"/>
+                    <p:commandButton value="Cancel" onclick="composeDlg.hide()" type="button"/>
+
+                </h:form>
+                 </p:dialog>
+                 
+                 
+                 
+</ui:define>
+</ui:composition>
+
+				
+				
+				
+				

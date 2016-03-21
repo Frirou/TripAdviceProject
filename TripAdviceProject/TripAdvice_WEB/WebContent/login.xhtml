@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/template/LogTemplate.xhtml">
+                
+                
+                
+                	
+			<ui:define name="pageContent">
+
+
+<h:form id="login_form" >
+		
+   <div class="login-wrap">
+			<img src="#{request.contextPath}/resources/css/images/logo.png" class="login-img" alt="logo"/><br/>
+			<div class="login-c1">
+				<div class="cpadding50">	
+				<h:outputLabel value="Username" />
+					<h:inputText value="#{authBean.user.login}" id="login" styleClass="form-control logpadding"/>
+				    
+				
+									<h:outputLabel value="Password" />
+					
+					<h:inputSecret  value="#{authBean.user.password}" styleClass="form-control logpadding"/>
+
+				</div>
+			</div>
+			<div class="login-c2">
+				<div class="logmargfix">
+					<div class="chpadding50">
+							<div class="alignbottom">
+				<h:commandButton id="login_submit" action="#{authBean.doLogin}"  value="SUBMIT" styleClass="btn-search4" />
+							</div>
+							
+								<div class="alignbottom2">
+							  <div class="checkbox">
+				<h:message for="login_submit" styleClass="error" />
+
+							  </div>
+							</div>
+							
+					</div>
+					
+				</div>
+			</div>
+			<div class="login-c3">
+			<div class="right">
+<!-- 			<h:commandLink action="#"  value="Register" styleClass="whitelink"  /> -->
+			
+			
+					<h:commandLink action="/register.jsf" value="Register" styleClass="whitelink"/>
+				
+				</div>
+			</div>	
+					
+		
+</div>
+</h:form>
+                    </ui:define>
+</ui:composition>

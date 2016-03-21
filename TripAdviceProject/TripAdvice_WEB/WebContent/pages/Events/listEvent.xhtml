@@ -1,0 +1,367 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+	encoding="UTF-8">
+
+
+
+	<script type="text/javascript">
+
+	
+function changeform()
+{
+	document.getElementById("master").style.display = "inline"	;
+	document.getElementById("myevent").style.display = "none"	;
+	
+}
+function changeform2()
+{
+	document.getElementById("myevent").style.display = "inline"	;
+	document.getElementById("master").style.display = "none"	;
+
+}
+
+function changeform4()
+{
+	document.getElementById("myevent").style.display = "inline"	;
+	document.getElementById("user").style.display = "none"	;
+
+}
+
+function changeform5()
+{
+
+	document.getElementById("user").style.display = "inline"	;
+	document.getElementById("myevent").style.display = "none"	;
+
+}
+		</script>
+
+	<!--  All Event -->
+	<h:form id="master">
+
+		<div id="tab1"
+			style="width: 1100px; margin: 50px 0 0 100px; background-color: silver;">
+			<p:commandButton value="My  Events" onclick="changeform2()"
+				icon="ui-icon-script" />
+			<p:dataTable rendered="#{not empty eventsBean.events}"
+				value="#{eventsBean.getEventsNotMe(authBean.user.id)}" var="pla"
+				rows="5" rowKey="#{pla.idEvent}" paginator="true"
+				paginatorPosition="bottom"
+				filteredValue="#{eventsBean.fileteredPlaces}" selectionMode="single"
+				selection="#{eventsBean.event}" widgetVar="plaTab1">
+
+				<f:facet name="header">
+					<h:outputText value="List Of Events"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</f:facet>
+
+				<p:ajax event="rowSelect" listener="#{eventsBean.onRowSelect}"
+					update=":master" />
+				<p:column headerText="Name" filterBy="#{pla.name}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.name}" />
+				</p:column>
+
+
+				<p:column headerText="Address" filterBy="#{pla.address}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.address}" />
+				</p:column>
+
+				<p:column headerText="Begin Date" filterBy="#{pla.begin_date}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.begin_date}" />
+				</p:column>
+
+				<p:column headerText="End Date" filterBy="#{pla.end_date}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.end_date}" />
+				</p:column>
+
+				<p:column headerText="Type" filterBy="#{pla.typeevt}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.typeevt}" />
+				</p:column>
+
+				<p:column headerText="Nbr Tickets" filterBy="#{pla.nbrTicket}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.nbrTicket}" />
+				</p:column>
+
+				<p:column headerText="Owner" filterBy="#{pla.personne.login}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.personne.login}" />
+				</p:column>
+
+				<p:column>
+					<p:lightBox styleClass="imagebox">
+							<h:outputLink value="resources/images/a.jpg" title="Sopranos 1">
+								<p:graphicImage id="event_image" value="#{eventImageBean.image}"
+									cache="false" styleClass="editor-picture" height="50"
+									width="100">
+									<f:param name="idEvent" value="#{pla.idEvent}" />
+								</p:graphicImage>
+							</h:outputLink>
+						</p:lightBox>
+						
+				</p:column>
+				<p:column>
+
+					<p:commandButton id="a" value="Subscribe"
+						disabled="#{eventsBean.disable2}"
+						action="#{eventsBean.reserver()}" onkeydown="PF('dlg').show();"
+						ajax="true" update=":master">
+						<f:setPropertyActionListener target="#{eventsBean.event}"
+							value="#{pla}" />
+					</p:commandButton>
+				</p:column>
+				
+
+
+			</p:dataTable>
+			<div class="fb-like"
+				data-href="http://localhost:8181/TripAdvice_WEB/pages/Events/manageEvent.jsf"
+				data-layout="standard" data-action="like" data-show-faces="true"
+				data-share="true"></div>
+
+		</div>
+
+
+		<p:dialog id="dialog"
+			header="Your Ticket number is #{eventsBean.event.nbrTicket} Print it Now"
+			widgetVar="dlg" width="700" showEffect="fade" hideEffect="fade"
+			rendered="#{eventsBean.isrendred()}">
+
+			<!-- 			<h:panelGrid columns="2" cellpadding="5"> -->
+
+			<p:dataTable id="tbl" var="car" value="#{eventsBean.event}">
+				<p:outputLabel id="name112" value="#{car.nbrTicket-5}"
+					style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				<p:column>
+					<f:facet name="header">
+						<h:outputLabel for="name1" value="Owner:"
+							style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+					</f:facet>
+					<p:outputLabel id="name1" value="#{car.personne.nom}"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputLabel for="name" value="Event:"
+							style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+					</f:facet>
+					<p:outputLabel id="name" value="#{car.name}"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputLabel for="surname" value="Address:"
+							style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+					</f:facet>
+					<p:outputLabel id="surname" value="#{eventsBean.event.address}"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputLabel for="BeginDate" value="Begin Date:"
+							style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+					</f:facet>
+					<p:outputLabel id="BeginDate"
+						value="#{eventsBean.event.begin_date}"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</p:column>
+
+				<p:column>
+					<f:facet name="header">
+						<h:outputLabel for="EndDate" value="End Date:"
+							style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+					</f:facet>
+					<p:outputLabel id="EndDate" value="#{eventsBean.event.end_date}"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+
+				</p:column>
+
+
+			</p:dataTable>
+			<!-- 			</h:panelGrid> -->
+
+			<h:commandLink>
+				<p:graphicImage value="/resources/images/pdf4.png" />
+				<p:dataExporter type="pdf" target="tbl" fileName="Ticket" />
+			</h:commandLink>
+
+		</p:dialog>
+
+	</h:form>
+
+	<!-- 	My Event -->
+
+
+	<h:form id="myevent" style="display: none">
+
+		<div id="tab1"
+			style="width: 900px; margin: 50px 0 0 160px; background-color: silver;">
+			<p:commandButton value="All  Events" onclick="changeform()"
+				icon="ui-icon-script" />
+			<p:commandButton value="Invite Friends" onclick="changeform5()"
+				rendered="#{eventsBean.isrendred1()}" icon="ui-icon-script" />
+
+
+			<p:dataTable rendered="#{not empty eventsBean.events}"
+				value="#{eventsBean.getEventsbyId(authBean.user.id)}" var="pla"
+				rows="5" rowKey="#{pla.idEvent}" paginator="true"
+				paginatorPosition="bottom"
+				filteredValue="#{eventsBean.fileteredPlaces}" selectionMode="single"
+				selection="#{eventsBean.event}" widgetVar="plaTab">
+
+				<f:facet name="header">
+					<h:outputText value="List Of Events"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</f:facet>
+
+				<p:ajax event="rowSelect" listener="#{eventsBean.onRowSelect}"
+					update=":details" />
+
+				<!-- 				<p:column headerText="Id" filterBy="#{pla.idEvent}" -->
+				<!-- 					filterMatchMode="startsWith"> -->
+				<!-- 					<h:outputText value="#{pla.idEvent}" /> -->
+				<!-- 				</p:column> -->
+
+
+				<p:column headerText="Name" filterBy="#{pla.name}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.name}" />
+				</p:column>
+
+				<p:column headerText="Address" filterBy="#{pla.address}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.address}" />
+				</p:column>
+
+				<p:column headerText="Begin Date" filterBy="#{pla.begin_date}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.begin_date}" />
+				</p:column>
+
+				<p:column headerText="End Date" filterBy="#{pla.end_date}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.end_date}" />
+				</p:column>
+
+				<p:column headerText="Type" filterBy="#{pla.typeevt}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.typeevt}" />
+				</p:column>
+				<p:column headerText="Nbr Tickets" filterBy="#{pla.nbrTicket}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.nbrTicket}" />
+				</p:column>
+
+				<p:column>
+					<p:graphicImage id="event_image" value="#{eventImageBean.image}"
+						cache="false" styleClass="editor-picture" height="50" width="100">
+						<f:param name="idEvent" value="#{pla.idEvent}" />
+					</p:graphicImage>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:commandButton icon="ui-icon-circle-plus"
+				actionListener="#{eventsBean.doNew()}" value="Create Event"
+				update=":details" />
+
+		</div>
+	</h:form>
+
+
+	<!-- 	List Friends -->
+
+	<h:form id="user" style="display: none">
+
+		<div id="tab1"
+			style="width: 900px; margin: 50px 0 0 160px; background-color: silver;">
+			<p:commandButton value="My Event" onclick="changeform4()"
+				icon="ui-icon-script" />
+
+			<p:dataTable rendered="#{not empty userBean.personnes}"
+				value="#{userBean.getEventsNotMe(authBean.user.id)}" var="pla"
+				rows="5" rowKey="#{pla.id}" paginator="true"
+				paginatorPosition="bottom"
+				filteredValue="#{userBean.fileteredUsers}" selectionMode="single"
+				selection="#{userBean.pers}" widgetVar="plaTab2">
+
+				<f:facet name="header">
+					<h:outputText value="List Of Friends"
+						style="FONT-SIZE: x-large; FONT-STYLE: italic; FONT-FAMILY: 'Calibri'; COLOR: #0000a0;" />
+				</f:facet>
+
+				<p:ajax event="rowSelect" listener="#{userBean.onRowSelect}" />
+
+
+				<p:column headerText="Name" filterBy="#{pla.nom}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.nom}" />
+				</p:column>
+
+				<p:column headerText="Last Name" filterBy="#{pla.prenom}"
+					filterMatchMode="contains">
+					<h:outputText value="#{pla.prenom}" />
+				</p:column>
+
+				<p:column headerText="E-Mail" filterBy="#{pla.mail}"
+					filterMatchMode="contains">
+					<h:outputText value="#{pla.mail}" />
+				</p:column>
+
+				<p:column headerText="Phone" filterBy="#{pla.phone}"
+					filterMatchMode="contains">
+
+					<h:outputText value="#{pla.phone}" />
+				</p:column>
+
+
+				<p:column>
+
+					<p:commandButton value="Invite" action="#{userBean.envoiMail()}"
+						ajax="true">
+					</p:commandButton>
+
+
+				</p:column>
+
+			</p:dataTable>
+
+		</div>
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&amp;appId=1460045290894282&amp;version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+	</h:form>
+
+</ui:composition>
